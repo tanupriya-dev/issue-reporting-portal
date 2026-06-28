@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Issue Reporting Portal</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f7fb;
+      color:#333;
+    }
+
+    header{
+      background:#1e3a8a;
+      color:white;
+      padding:20px;
+      text-align:center;
+    }
+
+    header h1{
+      margin-bottom:8px;
+    }
+
+    .container{
+      width:90%;
+      max-width:1200px;
+      margin:30px auto;
+    }
+
+    .dashboard{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:20px;
+      margin-bottom:30px;
+    }
+
+    .card{
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      text-align:center;
+    }
+
+    .card h2{
+      color:#1e3a8a;
+      margin-bottom:10px;
+      font-size:32px;
+    }
+
+    .form-section,
+    .table-section{
+      background:white;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom:30px;
+    }
+
+    .form-section h2,
+    .table-section h2{
+      margin-bottom:20px;
+      color:#1e3a8a;
+    }
+
+    form{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    form .full{
+      grid-column:1 / -1;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:15px;
+    }
+
+    textarea{
+      resize:none;
+      height:120px;
+    }
+
+    button{
+      background:#1e3a8a;
+      color:white;
+      border:none;
+      padding:12px 18px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:16px;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#162d6b;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:15px;
+    }
+
+    table th,
+    table td{
+      padding:14px;
+      border-bottom:1px solid #ddd;
+      text-align:left;
+    }
+
+    table th{
+      background:#1e3a8a;
+      color:white;
+    }
+
+    .status{
+      padding:6px 12px;
+      border-radius:20px;
+      font-size:13px;
+      color:white;
+      font-weight:bold;
+    }
+
+    .open{
+      background:#e63946;
+    }
+
+    .progress{
+      background:#ff9800;
+    }
+
+    .resolved{
+      background:#2e7d32;
+    }
+
+    footer{
+      text-align:center;
+      padding:15px;
+      background:#1e3a8a;
+      color:white;
+      margin-top:20px;
+    }
+
+    @media(max-width:768px){
+      form{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Issue Reporting Portal</h1>
+    <p>Report, Track & Manage Issues Efficiently</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+
+      <div class="card">
+        <h2 id="totalIssues">0</h2>
+        <p>Total Issues</p>
+      </div>
+
+      <div class="card">
+        <h2 id="openIssues">0</h2>
+        <p>Open Issues</p>
+      </div>
+
+      <div class="card">
+        <h2 id="progressIssues">0</h2>
+        <p>In Progress</p>
+      </div>
+
+      <div class="card">
+        <h2 id="resolvedIssues">0</h2>
+        <p>Resolved</p>
+      </div>
+
+    </div>
+
+    <!-- Issue Form -->
+    <div class="form-section">
+      <h2>Report New Issue</h2>
+
+      <form id="issueForm">
+
+        <div>
+          <label>Issue Title</label><br><br>
+          <input type="text" id="title" placeholder="Enter issue title" required>
+        </div>
+
+        <div>
+          <label>Category</label><br><br>
+          <select id="category" required>
+            <option value="">Select Category</option>
+            <option>Technical</option>
+            <option>Network</option>
+            <option>Software</option>
+            <option>Hardware</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Priority</label><br><br>
+          <select id="priority" required>
+            <option value="">Select Priority</option>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Status</label><br><br>
+          <select id="status" required>
+            <option>Open</option>
+            <option>In Progress</option>
+            <option>Resolved</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label>Description</label><br><br>
+          <textarea id="description" placeholder="Describe the issue..." required></textarea>
+        </div>
+
+        <div class="full">
+          <button type="submit">Submit Issue</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Issue Table -->
+    <div class="table-section">
+
+      <h2>Reported Issues</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="issueTable">
+
+          <tr>
+            <td>#101</td>
+            <td>Server Down</td>
+            <td>Network</td>
+            <td>High</td>
+            <td><span class="status open">Open</span></td>
+          </tr>
+
+          <tr>
+            <td>#102</td>
+            <td>Software Bug</td>
+            <td>Software</td>
+            <td>Medium</td>
+            <td><span class="status progress">In Progress</span></td>
+          </tr>
+
+          <tr>
+            <td>#103</td>
+            <td>Printer Not Working</td>
+            <td>Hardware</td>
+            <td>Low</td>
+            <td><span class="status resolved">Resolved</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 Issue Reporting Portal | Developed in HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script>
+
+    let issueId = 104;
+
+    const form = document.getElementById("issueForm");
+    const table = document.getElementById("issueTable");
+
+    form.addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const category = document.getElementById("category").value;
+      const priority = document.getElementById("priority").value;
+      const status = document.getElementById("status").value;
+
+      let statusClass = "";
+
+      if(status === "Open"){
+        statusClass = "open";
+      }
+      else if(status === "In Progress"){
+        statusClass = "progress";
+      }
+      else{
+        statusClass = "resolved";
+      }
+
+      const row = `
+        <tr>
+          <td>#${issueId}</td>
+          <td>${title}</td>
+          <td>${category}</td>
+          <td>${priority}</td>
+          <td><span class="status ${statusClass}">${status}</span></td>
+        </tr>
+      `;
+
+      table.innerHTML += row;
+
+      issueId++;
+
+      updateDashboard(status);
+
+      form.reset();
+    });
+
+    function updateDashboard(status){
+
+      const total = document.getElementById("totalIssues");
+      total.innerText = parseInt(total.innerText) + 1;
+
+      if(status === "Open"){
+        const open = document.getElementById("openIssues");
+        open.innerText = parseInt(open.innerText) + 1;
+      }
+
+      else if(status === "In Progress"){
+        const progress = document.getElementById("progressIssues");
+        progress.innerText = parseInt(progress.innerText) + 1;
+      }
+
+      else{
+        const resolved = document.getElementById("resolvedIssues");
+        resolved.innerText = parseInt(resolved.innerText) + 1;
+      }
+    }
+
+  </script>
+
+</body>
+</html>

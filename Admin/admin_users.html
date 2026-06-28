@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Admin Panel</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar admin-nav">
+        <div class="nav-brand">Admin Panel</div>
+        <ul class="nav-links">
+            <li><a href="admin-dashboard.html">Dashboard</a></li>
+            <li><a href="manage-issues.html">Manage Issues</a></li>
+            <li><a href="manage-users.html" class="active">Manage Users</a></li>
+            <li><a href="../php/logout.php" class="btn-logout">Logout</a></li>
+        </ul>
+    </nav>
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Manage Users</h1>
+            <div class="filter-container">
+                <select id="roleFilter">
+                    <option value="all">All Roles</option>
+                    <option value="user">Users</option>
+                    <option value="admin">Admins</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search users...">
+            </div>
+        </div>
+        
+        <div class="users-container">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Issues Reported</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <!-- Edit User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Edit User</h2>
+            <form id="editUserForm">
+                <input type="hidden" id="userId" name="user_id">
+                <div class="form-group">
+                    <label for="userName">Name</label>
+                    <input type="text" id="userName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="userRole">Role</label>
+                    <select id="userRole" name="role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="../js/manage-users.js"></script>
+</body>
+</html>
